@@ -5,8 +5,6 @@ services:
   - type: web
     name: evidencia-nakladov
     env: docker
-    # Politika reštartu: reštartuje kontajner, ak zlyhá
-    restartPolicy: on-failure
 
     # Príkaz, ktorý sa spustí pri builde.
     # Urobí náš skript spustiteľným a potom ho spustí, aby vytvoril DB.
