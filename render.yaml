@@ -1,23 +1,19 @@
-# Finálna a funkčná konfigurácia pre Render.com
+# Finálna, opravená a funkčná konfigurácia pre Render.com
 
-# 1. Najprv definujeme všetky potrebné disky
-disks:
-  - name: naklady-data # Meno nášho perzistentného disku
-    sizeGB: 1          # Najmenšia možná veľkosť
-
-# 2. Potom definujeme služby, ktoré budú disky používať
 services:
-  # Definícia našej webovej služby
+  # Definícia našej hlavnej webovej služby
   - type: web
     name: evidencia-nakladov
     env: docker
+    # Politika reštartu: reštartuje kontajner, ak zlyhá
+    restartPolicy: on-failure
 
     # Príkaz, ktorý sa spustí pri builde.
     # Urobí náš skript spustiteľným a potom ho spustí, aby vytvoril DB.
     buildCommand: "chmod +x ./init_db.sh && ./init_db.sh"
 
-    # Pripojenie disku k tejto službe.
-    # Odkazujeme na disk 'naklady-data' definovaný vyššie.
+    # Pripojenie perzistentného disku priamo k tejto službe
     disk:
       name: naklady-data
       mountPath: /app/data
+      sizeGB: 1
