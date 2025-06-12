@@ -1,25 +1,26 @@
-# Konfigurácia pre Render.com
-# Definuje našu webovú službu a perzistentný disk
+# Opravená a funkčná konfigurácia pre Render.com
 
 services:
-  # Názov našej služby
+  # Definícia našej webovej služby
   - type: web
     name: evidencia-nakladov
-    # Použijeme prostredie Docker
     env: docker
-    # Politika reštartu
     restartPolicy: unless-stopped
 
-    # Príkazy, ktoré sa spustia pri každom builde
-    # Najprv urobíme náš skript spustiteľným, potom ho spustíme
+    # Príkaz, ktorý sa spustí na začiatku.
+    # Urobí náš skript spustiteľným a potom ho spustí.
     initialDeployHook: |
       chmod +x ./init_db.sh
       ./init_db.sh
 
-    # Definícia perzistentného disku pre našu databázu
-    disks:
-      - name: naklady-data
-        # Cesta, kam sa disk pripojí v kontajneri
-        mountPath: /app/data
-        # Veľkosť disku
-        sizeGB: 1
+    # Pripojenie disku k tejto službe.
+    # 'disk' (jednotné číslo) odkazuje na disk definovaný nižšie.
+    disk:
+      name: naklady-data
+      mountPath: /app/data
+
+# Samostatná, vrchná sekcia na definovanie perzistentných diskov.
+disks:
+  # Definícia samotného disku.
+  - name: naklady-data
+    sizeGB: 1
