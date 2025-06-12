@@ -1,0 +1,182 @@
+/* Základné nastavenia */
+:root {
+    --color-primary: #003366; /* Tmavomodrá */
+    --color-accent: #FFCC00; /* Žltá */
+    --color-light-gray: #f4f4f4;
+    --color-dark-gray: #333;
+    --color-white: #ffffff;
+    --color-success: #28a745;
+    --color-danger: #dc3545;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background-color: var(--color-light-gray);
+    color: var(--color-dark-gray);
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Hlavička a Pätička */
+header {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 20px 0;
+    margin-bottom: 30px;
+}
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+header .user-info a {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #777;
+}
+
+/* Karty a formuláre */
+.card {
+    background-color: var(--color-white);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.login-card {
+    max-width: 400px;
+    margin: 50px auto;
+    text-align: center;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+input[type="text"], input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+/* Tlačidlá */
+.btn {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+.btn:hover {
+    background-color: #e6b800;
+}
+.btn-small {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+/* Špecifické elementy */
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.summary-card { text-align: center; }
+.summary-card h3 { margin-top: 0; }
+.summary-card p { font-size: 28px; font-weight: bold; margin-bottom: 0; }
+.summary-debt p { color: var(--color-danger); }
+.summary-credit p { color: var(--color-success); }
+
+.expense-list { list-style: none; padding: 0; }
+.expense-list a { text-decoration: none; color: inherit; }
+.expense-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid var(--color-light-gray);
+    transition: background-color 0.2s;
+}
+.expense-list li:hover { background-color: #f9f9f9; }
+
+.participants-list { list-style: none; padding: 0; }
+.participants-list li {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+.participants-list .status { text-align: right; }
+.status .paid { color: var(--color-success); font-weight: bold; }
+.status .payer { color: #555; font-style: italic; }
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: bold;
+}
+.error {
+    color: var(--color-danger);
+    margin-top: 15px;
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+    color: var(--color-white);
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+.admin-actions {
+    margin-top: 25px;
+}
+
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.stats-table th, .stats-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+.stats-table th {
+    background-color: var(--color-light-gray);
+    font-weight: bold;
+}
+.stats-table tbody tr:hover {
+    background-color: #f9f9f9;
+}

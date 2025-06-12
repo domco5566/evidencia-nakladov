@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="summary-grid">
+        <div class="card summary-card summary-debt">
+            <h3>Celkovo dlhuješ</h3>
+            <p>{{ "%.2f"|format(dlhujes) }} €</p>
+        </div>
+        <div class="card summary-card summary-credit">
+            <h3>Ostatní ti dlhujú</h3>
+            <p>{{ "%.2f"|format(dlzia_ti) }} €</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Pridať nový náklad</h2>
+        <form method="post" action="{{ url_for('dashboard', meno=user.meno) }}">
+            <div class="form-group">
+                <label for="nazov">Názov nákladu:</label>
+                <input type="text" id="nazov" name="nazov" required>
+            </div>
+            <div class="form-group">
+                <label for="suma">Celková suma:</label>
+                <input type="number" id="suma" name="suma" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label>Týka sa to ostatných (vy budete pridaný automaticky):</label>
+                <div class="checkbox-group">
+                    {% for p in pouzivatelia %}
+                        {# Zobrazíme iba používateľov, ktorí nie sú aktuálne prihlásení #}
+                        {% if p.id != user.id %}
+                            <label><input type="checkbox" name="podielnici" value="{{ p.id }}"> {{ p.meno }}</label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="submit" class="btn">Pridať náklad</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Prehľad všetkých nákladov</h2>
+        <ul class="expense-list">
+            {% for vydavok in vydavky %}
+                <a href="{{ url_for('vydavok_detail', vydavok_id=vydavok.id, meno=user.meno) }}">
+                    <li>
+                        <span>{{ vydavok.nazov }}</span>
+                        <span>{{ "%.2f"|format(vydavok.celkova_suma) }} € (Platil: {{ vydavok.kto_platil }})</span>
+                    </li>
+                </a>
+            {% else %}
+                <li>Zatiaľ neboli pridané žiadne náklady.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

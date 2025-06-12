@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="card">
+        <a href="{{ url_for('dashboard', meno=user.meno) }}" class="back-link">&larr; Späť na Dashboard</a>
+        <h2>Archív a Štatistiky</h2>
+        <p>Prehľad všetkých uzavretých nákladov a štatistiky nákupov.</p>
+    </div>
+
+    <div class="card">
+        <h3>Kto najčastejšie nakupuje?</h3>
+        <table class="stats-table">
+            <thead>
+                <tr>
+                    <th>Meno</th>
+                    <th>Počet nákupov</th>
+                    <th>Celková minutá suma</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stat in statistiky %}
+                <tr>
+                    <td>{{ stat.meno }}</td>
+                    <td>{{ stat.pocet_nakupov }}</td>
+                    <td>{{ "%.2f"|format(stat.celkova_suma) }} €</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">Zatiaľ žiadne dáta.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Archivované náklady</h3>
+        <ul class="expense-list">
+            {% for vydavok in vydavky %}
+                <a href="{{ url_for('vydavok_detail', vydavok_id=vydavok.id, meno=user.meno) }}">
+                    <li>
+                        <span>{{ vydavok.nazov }}</span>
+                        <span>{{ "%.2f"|format(vydavok.celkova_suma) }} € (Platil: {{ vydavok.kto_platil }})</span>
+                    </li>
+                </a>
+            {% else %}
+                <li>Žiadne náklady neboli zatiaľ archivované.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

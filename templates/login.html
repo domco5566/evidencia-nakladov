@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="card login-card">
+        <h2>Prihlásenie</h2>
+        <p>Zadajte svoje meno pre pokračovanie.</p>
+        <form method="post">
+            <input type="text" name="meno" placeholder="Vaše meno" required>
+            <button type="submit" class="btn">Prihlásiť sa</button>
+        </form>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

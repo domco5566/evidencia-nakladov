@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidencia Nákladov</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Evidencia Nákladov</h1>
+            {% if user %}
+                <div class="user-info">
+                    Prihlásený: <strong>{{ user.meno }}</strong> | <a href="{{ url_for('archiv', meno=user.meno) }}">Archív</a> | <a href="{{ url_for('login') }}">Odhlásiť sa</a>
+                </div>
+            {% endif %}
+        </div>
+    </header>
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2025 - Tvoja Firma</p>
+    </footer>
+</body>
+</html>

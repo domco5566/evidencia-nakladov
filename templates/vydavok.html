@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="card">
+        <a href="{{ url_for('dashboard', meno=user.meno) }}" class="back-link">&larr; Späť na prehľad</a>
+        <h2>Detail nákladu: {{ vydavok.nazov }}</h2>
+        <p class="expense-total">Celková suma: <strong>{{ "%.2f"|format(vydavok.celkova_suma) }} €</strong> (Platil: <strong>{{ vydavok.kto_platil }}</strong>)</p>
+        
+        <h3>Podielnici</h3>
+        <ul class="participants-list">
+            {% for p in podielnici %}
+                <li>
+                    <span class="name">{{ p.meno }}</span>
+                    <span class="share">{{ "%.2f"|format(p.suma_podielu) }} €</span>
+                    <span class="status">
+                        {% if p.zaplatene %}
+                            <span class="paid">Zaplatené</span>
+                        {% elif p.pouzivatel_id == vydavok.kto_platil_id %}
+                            <span class="payer">Platca</span>
+                        {% else %}
+                             <a href="{{ url_for('zaplatit', podiel_id=p.id, meno=user.meno) }}" class="btn btn-small">Označiť ako zaplatené</a>
+                        {% endif %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% if user.id == vydavok.kto_platil_id %}
+    <div class="admin-actions">
+        <hr>
+        <h4>Možnosti správcu</h4>
+        <a href="{{ url_for('upravit_vydavok', vydavok_id=vydavok.id, meno=user.meno) }}" class="btn">Upraviť podielnikov</a>
+
+        <a href="{{ url_for('vymazat_vydavok', vydavok_id=vydavok.id, meno=user.meno) }}" class="btn btn-danger" onclick="return confirm('Naozaj chcete vymazať tento náklad? Táto akcia je trvalá.')">Vymazať náklad</a>
+    </div>
+{% endif %}
+    </div>
+{% endblock %}

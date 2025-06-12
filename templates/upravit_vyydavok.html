@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <a href="{{ url_for('vydavok_detail', vydavok_id=vydavok.id, meno=user.meno) }}" class="back-link">&larr; Späť na detail</a>
+    <h2>Upraviť podielnikov pre: {{ vydavok.nazov }}</h2>
+    <p>Celková suma: <strong>{{ "%.2f"|format(vydavok.celkova_suma) }} €</strong></p>
+    
+    <form method="post">
+        <div class="form-group">
+            <label>Vyberte, kto sa má podieľať na náklade (vy ste pridaný automaticky):</label>
+            <div class="checkbox-group">
+                {% for p in vsetci_pouzivatelia %}
+                    {% if p.id != vydavok.kto_platil_id %}
+                        {# Skontrolujeme, či je ID používateľa v zozname aktuálnych podielnikov a podľa toho zaškrtneme checkbox #}
+                        <label>
+                            <input type="checkbox" name="podielnici" value="{{ p.id }}" {% if p.id in aktualni_podielnici_ids %}checked{% endif %}> 
+                            {{ p.meno }}
+                        </label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <button type="submit" class="btn">Uložiť zmeny</button>
+    </form>
+</div>
+{% endblock %}
